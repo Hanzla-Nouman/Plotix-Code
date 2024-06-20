@@ -21,8 +21,7 @@ console.log("All Coaches here",allCoaches);
     | null
   )[][] = prepareDataForMapping({ data: coachesData });
 
-  return <CoachesListingPage allCoaches={allCoaches} filteredCoachesData={filteredCoachesData} />;
-  // return <AllCoaches coaches={allCoaches} />;
-};
+  return <CoachesListingPage allCoaches={allCoaches} filteredCoachesData={filteredCoachesData} />
+}
 
 export default Page;

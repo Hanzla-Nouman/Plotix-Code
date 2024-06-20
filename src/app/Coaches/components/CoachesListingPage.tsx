@@ -16,6 +16,9 @@ interface Props {
 }
 export default function CoachesListingPage({ filteredCoachesData,allCoaches }: Props) {
   const [searchValue, setSearchValue] = useState("");
+  const [location, setlocation] = useState("");
+  const [language, setlanguage] = useState("");
+  const [category, setcategory] = useState("");
   const allCoachesData = allCoaches.items.map(i=>i).filter(c=>c.name.toLowerCase().includes(searchValue.toLowerCase()))
   useEffect(()=>{
 
@@ -24,7 +27,10 @@ export default function CoachesListingPage({ filteredCoachesData,allCoaches }: P
     <>
       <CoachListingHeader searchValue={searchValue} setSearchValue={setSearchValue}/>
 
-   { !searchValue &&  <CoachListingFilters />}
+   { !searchValue &&  <CoachListingFilters  setlocation={setlocation} setlanguage={setlanguage} setcategory={setcategory}/>}
+   {location}
+   {language}
+   {category}
       {console.log("HERE IS COACHES",allCoachesData)}
 <div className="mt-10 px-10">
       { searchValue && <AllCoaches coaches={allCoachesData}/>}

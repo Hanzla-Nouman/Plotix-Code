@@ -51,6 +51,8 @@ model User {
   createdAt               DateTime             @default(now())
   email                   String               @unique
   name                    String?
+  aboutMe                 String?
+  hourlyRate               Int?
   resetPasswordToken      String?              @db.VarChar
   avatarId                String?              @unique
   resetPasswordExpiration String?              @db.VarChar

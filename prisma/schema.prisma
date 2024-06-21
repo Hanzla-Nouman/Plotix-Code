@@ -64,7 +64,7 @@ model User {
   preferedLanguages       LanguageOptions[]
   preferedCurrency        String?              @default("USD")
   preferedCoachCategories CoachingCategories[]
-
+  location               String?
   focusAreas       FocusArea[]
   purchases        Purchase[]
   bookings         Booking[]
@@ -345,6 +345,13 @@ enum LanguageOptions {
   Kazakh
   Uzbek
   Yoruba
+}
+
+enum Location{
+  UK
+  Germany
+  USA
+  Emirates
 }
 
 enum PinnedOptions {

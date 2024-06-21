@@ -8,7 +8,7 @@ import { CoachingCategories } from "@prisma/client";
 import { ListFilter } from "lucide-react";
 import React, { useState } from "react";
 
-export default function CoachListingFilters({setlocation,setlanguage,setcategory}) {
+export default function CoachListingFilters({handleApplyFilters,handleResetFilters,setlocation,setlanguage,setcategory}) {
   const { data: queryResults, isLoading } =
     trpc.category.getCategoriesList.useQuery({});
 
@@ -36,7 +36,7 @@ export default function CoachListingFilters({setlocation,setlanguage,setcategory
             <label htmlFor="" className=" font-semibold">
               Location
             </label>
-            <select name="" id="">
+            <select name="" id="" onChange={(e)=>setlocation(e.target.value)}>
               <option value="London">London</option>
               <option value="UK">UK</option>
               <option value="Australia">Australia</option>
@@ -50,7 +50,7 @@ export default function CoachListingFilters({setlocation,setlanguage,setcategory
             </label>
             <select name="" id="" onChange={(e)=>setlanguage(e.target.value)}>
               {languageOptions.map((i) => (
-                <option value={i.value}>{i.label}</option>
+                <option value={i.label}>{i.label}</option>
               ))}
             </select>
           </div>
@@ -58,17 +58,17 @@ export default function CoachListingFilters({setlocation,setlanguage,setcategory
             <label htmlFor="" className=" font-semibold">
               Categories
             </label>
-            <select name="" id="" >
+            <select name="" id=""  onChange={(e)=>setcategory(e.target.value)}>
               {COACH_CATEGORIES.map((i) => (
-                <option value={i.value}>{i.label}</option>
+                <option value={i.label}>{i.label}</option>
               ))}
             </select>
           </div>
           <div className="">
-            <button className="p-2 bg-slate-400 rounded-full mx-4">
+            <button onClick={handleResetFilters} className="p-2 bg-slate-400 rounded-full mx-4">
               Reset
             </button>
-            <button className="p-2 bg-slate-400 rounded-full mx-4">
+            <button onClick={handleApplyFilters}  className="p-2 bg-slate-400 rounded-full mx-4">
               Apply Filters
             </button>
           </div>

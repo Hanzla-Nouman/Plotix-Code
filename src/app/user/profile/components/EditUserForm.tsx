@@ -158,7 +158,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { trpc } from "@/trpc/client";
-import { CoachCategories, languageOptions } from "@/constants/Coach";
+import { CoachCategories, languageOptions,location } from "@/constants/Coach";
 import { Button } from "@/components/ui/button";
 import { AvatarPicker } from "@/components/AvatarPicker";
 import { Loader2 } from "lucide-react";
@@ -172,7 +172,7 @@ import {
   FormCoachCategoriesSelect,
 } from "@/components/FormElements";
 import { z } from "zod";
-import { LanguageOptionsSchema } from "@/TSChema";
+import { CoachAggregateArgsSchema, LanguageOptionsSchema } from "@/TSChema";
 
 interface EditUserFormProps {
   currentUser: Session["user"];
@@ -183,6 +183,7 @@ const EditUserFormValidator = z.object({
   aboutMe: z.string().optional(),
   hourlyRate: z.number().optional(),
   preferedCurrency: z.string().optional(),
+  location: z.string().optional(),
   preferedLanguages: z.array(LanguageOptionsSchema),
   focusAreas: z.array(z.string()),
   preferedCoachCategories: z.array(z.nativeEnum(CoachCategories)),
@@ -210,6 +211,7 @@ export const EditUserForm = ({ currentUser }: EditUserFormProps) => {
       preferedLanguages: [],
       preferedCurrency: "USD",
       focusAreas: [],
+      location: "USA",
       preferedCoachCategories: [],
       hourlyRate: 0, // Default value for hourlyRate
     },
@@ -220,6 +222,7 @@ export const EditUserForm = ({ currentUser }: EditUserFormProps) => {
       name: user?.name || "",
       aboutMe: user?.coach?.aboutMe || "",
       preferedCurrency: user?.preferedCurrency || "USD",
+      location: user?.coach?. location || "USA",
       preferedLanguages: user?.preferedLanguages || [],
       hourlyRate: user?.coach?.hourlyRate || 0, 
       focusAreas: user?.focusAreas?.map((focusArea) => focusArea.id) || [],
@@ -255,10 +258,10 @@ export const EditUserForm = ({ currentUser }: EditUserFormProps) => {
       toast.error("Failed to update user");
     }
   });
-
+console.log("here is user on form",user)
   return (
     <section className="flex gap-4 flex-col lg:flex-row justify-center">
-      {user ? (
+      {user ? ( 
         <AvatarPicker
           media={user?.avatar}
           name={user?.name || ""}
@@ -278,6 +281,12 @@ export const EditUserForm = ({ currentUser }: EditUserFormProps) => {
             mode="multiple"
             label="Languages"
             options={languageOptions}
+          />
+          <FormSelect
+            name="location"
+            mode="single"
+            label="Location"
+            options={location}
           />
           <FormCoachCategoriesSelect
             name="preferedCoachCategories"

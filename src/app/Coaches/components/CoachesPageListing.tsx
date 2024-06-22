@@ -15,16 +15,19 @@ interface Props {
 export default function   CoachesPageListing({ coachesList }: Props) {
   return (
     <MaxWidthWrapper className="relative">
-      {coachesList.map((coachData, i) => (
+      {console.log("coachesList",coachesList)}
+      {coachesList.filter(i=>i.length>0).map((coachData, i) => (
         <div className="w-full" key={i}>
-          <CoachReel
+          {console.log("coachData",coachData)}
+          {console.log("coachData in filter",coachData.map(i=>i.approvedForSale === "approved"))}
+         {coachData.map(i=>i.approvedForSale === "approved") &&  <CoachReel
             title={coachData[0]?.categoryName || ""}
             subtitle="Easy access to the best expert you can ever found"
             linkTitle="View All"
             filteredCoachesData={coachData}
             withPagination
             href="/"
-          />
+          />}
         </div>
       ))}
 

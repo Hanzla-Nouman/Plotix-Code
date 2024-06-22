@@ -50,7 +50,7 @@ const UserAccountNav = async () => {
         </DropdownMenuItem>
         {isCoach && (
           <DropdownMenuItem>
-            <Link href={`/coaches/${user.coachId}`}>Profile</Link>
+            <Link href={`/Coaches/${user.coachId}`}>Profile</Link>
           </DropdownMenuItem>
         )}
         {isCoach && (

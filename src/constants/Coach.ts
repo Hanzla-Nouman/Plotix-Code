@@ -54,8 +54,23 @@ export const languageOptions = [
   value: lang,
 }));
 
-export const location=[
-  "UK","Australia","Germany","Spain","USA","Emirates"
+export const location = [
+  "UK",
+  "Australia",
+  "Germany",
+  "Spain",
+  "USA",
+  "Emirates",
+].map((lang) => ({
+  label: lang,
+  value: lang,
+}));
+
+export const focusAreas = [
+  "Transition",
+  "Leadership",
+  "Productivity",
+  "Empowerment"
 ].map((lang) => ({
   label: lang,
   value: lang,

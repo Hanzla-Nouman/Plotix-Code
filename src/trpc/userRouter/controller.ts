@@ -75,7 +75,7 @@ export const updateUser = async (input: TUpdateUserInput) => {
  
   try {
     // const { id, preferedCoachCategories,aboutMe, ...data } = input;
-    const { id, name,preferedLanguages, avatar, preferedCoachCategories,hourlyRate,location, aboutMe,...data } = input;
+    const { id, name,preferedLanguages, avatar, preferedCoachCategories,hourlyRate,focusArea,location, aboutMe,...data } = input;
 
     updatedUser = await prisma.user.update({
       where: { id: id as string },
@@ -97,6 +97,7 @@ export const updateUser = async (input: TUpdateUserInput) => {
         aboutMe: aboutMe,
         hourlyRate: hourlyRate,
         location:location,
+        focusArea:focusArea,
         ...data,
         coach: {
           update: {
@@ -107,6 +108,8 @@ export const updateUser = async (input: TUpdateUserInput) => {
             language: preferedLanguages,
             aboutMe: aboutMe,
         location:location,
+        focusArea:focusArea,
+
 
 
           },

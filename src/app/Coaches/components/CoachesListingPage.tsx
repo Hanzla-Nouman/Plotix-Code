@@ -130,6 +130,7 @@ export default function CoachesListingPage({ filteredCoachesData, allCoaches }: 
       <CoachListingHeader searchValue={searchValue} setSearchValue={setSearchValue} />
       {!searchValue && (
         <CoachListingFilters
+        allCoaches={allCoaches}
           handleApplyFilters={handleApplyFilters}
           handleResetFilters={handleResetFilters}
           setlocation={setlocation}

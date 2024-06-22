@@ -40,7 +40,7 @@ export default function CoachSidebar({ coach, isEditable }: TCoachSidebarProps) 
             </div>
           </div>
         </div>
-
+{console.log("i am the coach here",coach)}
         {!isEditable && (
           <div className="flex gap-2 justify-center">
             {coach.categories  && (
@@ -85,8 +85,8 @@ export default function CoachSidebar({ coach, isEditable }: TCoachSidebarProps) 
           <h2 className="text-lg font-semibold">Focus Areas</h2>
 
           <div className="flex flex-wrap gap-2 w-full">
-            {coach.focusAreas.map(focusArea => (
-              <Badge key={focusArea.id}>{focusArea.name}</Badge>
+            {coach.focusArea.map(focusArea => (
+              <Badge key={focusArea}>{focusArea}</Badge>
             ))}
           </div>
         </div>

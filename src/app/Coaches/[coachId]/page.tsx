@@ -49,7 +49,8 @@ const Page = async ({ params }: PageProps) => {
       id: coachId,
     },
   });
-
+console.log("Here is user in coach[id]",user)
+console.log("Here is coach coach[id]",coach)
   return <CoachPage user={user} staticCoachData={coach} />;
 };
 

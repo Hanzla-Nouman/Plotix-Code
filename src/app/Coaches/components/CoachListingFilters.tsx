@@ -1,14 +1,14 @@
 import CategoryIcon from "@/components/CategoryIcon";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { Button } from "@/components/ui/button";
-import { COACH_CATEGORIES, languageOptions } from "@/constants/Coach";
+import { COACH_CATEGORIES, languageOptions, location } from "@/constants/Coach";
 import prepareDataForMapping from "@/helpers/prepareDataForMapping";
 import { trpc } from "@/trpc/client";
 import { CoachingCategories } from "@prisma/client";
 import { ListFilter } from "lucide-react";
 import React, { useState } from "react";
 
-export default function CoachListingFilters({handleApplyFilters,handleResetFilters,setlocation,setlanguage,setcategory}) {
+export default function CoachListingFilters({handleApplyFilters,handleResetFilters,setlocation,setlanguage,setcategory,allCoaches}) {
   const { data: queryResults, isLoading } =
     trpc.category.getCategoriesList.useQuery({});
 
@@ -37,11 +37,8 @@ export default function CoachListingFilters({handleApplyFilters,handleResetFilte
               Location
             </label>
             <select name="" id="" onChange={(e)=>setlocation(e.target.value)}>
-              <option value="London">London</option>
-              <option value="UK">UK</option>
-              <option value="Australia">Australia</option>
-              <option value="USA">USA</option>
-              <option value="Saudi Araibia">Saudi Araibia</option>
+              
+              {location.map(i=><option value={i.label}>{i.label}</option>)}
             </select>
           </div>
           <div>
@@ -79,7 +76,7 @@ export default function CoachListingFilters({handleApplyFilters,handleResetFilte
           <Button variant="ghost" className="text-primary hover:text-primary">
             All
           </Button>
-
+          {console.log("CoachingCategories",allCoaches)}
           <div className="flex gap-2 items-center">
             {Object.values(CoachingCategories).map((category, i) =>
               category ? (
@@ -91,7 +88,7 @@ export default function CoachListingFilters({handleApplyFilters,handleResetFilte
                   <CategoryIcon name={category} />
 
                   <p className="text-muted-foreground hover:text-primary">
-                    {category}
+                    {category}   
                   </p>
                 </Button>
               ) : (

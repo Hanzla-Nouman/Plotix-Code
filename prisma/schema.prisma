@@ -55,6 +55,7 @@ model User {
   hourlyRate               Int?
   resetPasswordToken      String?              @db.VarChar
   avatarId                String?              @unique
+  focusArea             FocusAreas[]
   resetPasswordExpiration String?              @db.VarChar
   hash                    String
   loginAttempts           Int?
@@ -106,7 +107,8 @@ model Coach {
   twitchUrl              String?
   tiktokUrl              String?
   coachingCategories     CoachingCategories[]
-
+  
+  focusArea         FocusAreas[]
   sales             Purchase[]
   bookings          Booking[]
   subscribers       User[]            @relation("Subsriber")
@@ -388,4 +390,10 @@ enum MediaType {
 enum CoachingCategories {
   Comics
   Manga
+}
+enum FocusAreas{
+ Transition
+  Leadership
+  Productivity
+  Empowerment
 }

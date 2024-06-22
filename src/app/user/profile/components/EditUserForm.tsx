@@ -158,7 +158,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { trpc } from "@/trpc/client";
-import { CoachCategories, languageOptions,location } from "@/constants/Coach";
+import { CoachCategories, languageOptions,location,focusAreas } from "@/constants/Coach";
 import { Button } from "@/components/ui/button";
 import { AvatarPicker } from "@/components/AvatarPicker";
 import { Loader2 } from "lucide-react";
@@ -185,6 +185,7 @@ const EditUserFormValidator = z.object({
   preferedCurrency: z.string().optional(),
   location: z.string().optional(),
   preferedLanguages: z.array(LanguageOptionsSchema),
+  focusArea: z.array(z.string()),
   focusAreas: z.array(z.string()),
   preferedCoachCategories: z.array(z.nativeEnum(CoachCategories)),
 });
@@ -211,6 +212,7 @@ export const EditUserForm = ({ currentUser }: EditUserFormProps) => {
       preferedLanguages: [],
       preferedCurrency: "USD",
       focusAreas: [],
+      focusArea: [],
       location: "USA",
       preferedCoachCategories: [],
       hourlyRate: 0, // Default value for hourlyRate
@@ -225,6 +227,7 @@ export const EditUserForm = ({ currentUser }: EditUserFormProps) => {
       location: user?.coach?. location || "USA",
       preferedLanguages: user?.preferedLanguages || [],
       hourlyRate: user?.coach?.hourlyRate || 0, 
+      focusArea: user?.focusArea || [], 
       focusAreas: user?.focusAreas?.map((focusArea) => focusArea.id) || [],
       preferedCoachCategories:
         (user?.preferedCoachCategories as CoachCategories[]) || [],
@@ -288,6 +291,13 @@ console.log("here is user on form",user)
             label="Location"
             options={location}
           />
+          <FormSelect
+            name="focusArea"
+            mode="multiple"
+            label="FocusAreas New"
+            options={focusAreas}
+          />
+        
           <FormCoachCategoriesSelect
             name="preferedCoachCategories"
             label="Preferred Coaching Categories"

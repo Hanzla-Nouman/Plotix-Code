@@ -74,21 +74,10 @@ export const updateUser = async (input: TUpdateUserInput) => {
   let updatedUser;
  
   try {
-    // const { id, preferedCoachCategories,aboutMe, ...data } = input;
     const { id, name,preferedLanguages, avatar, preferedCoachCategories,hourlyRate,focusArea,location, aboutMe,...data } = input;
 
     updatedUser = await prisma.user.update({
       where: { id: id as string },
-      // data: {
-      //   preferedCoachCategories: preferedCoachCategories,
-      //   aboutMe: aboutMe,
-      //   ...data,
-      //   coach: {
-      //     update: {
-      //       coachingCategories: preferedCoachCategories,
-      //     },
-      //   },
-      // },
       data: {
         preferedCoachCategories: preferedCoachCategories,
         name: name,

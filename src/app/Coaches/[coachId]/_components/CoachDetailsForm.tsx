@@ -21,7 +21,7 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
-import { languageOptions } from "@/constants/Coach";
+import { focusAreas, languageOptions } from "@/constants/Coach";
 
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -41,6 +41,7 @@ const CoachDetailsFormValidator = z.object({
   aboutMe: z.string().nullish(),
   language: z.array(LanguageOptionsSchema),
   focusAreas: z.array(z.string()),
+  focusArea: z.array(z.string()),
 });
 
 type TCoachDetailsFormValidator = z.infer<typeof CoachDetailsFormValidator>;
@@ -56,6 +57,7 @@ const CoachDetailsForm = (props: TCoachDetailsFormProps) => {
       name: coach.name,
       aboutMe: coach.aboutMe,
       focusAreas: coach.focusAreas.map((focusArea) => focusArea.id) || [],
+    focusArea: coach.focusArea || [],
       headline: coach.headline,
       hourlyRate: coach.hourlyRate,
       language: coach.language,
@@ -90,7 +92,7 @@ const CoachDetailsForm = (props: TCoachDetailsFormProps) => {
       },
     });
   };
-
+console.log(coach)
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <div className="flex justify-center items-center gap-3">
@@ -135,9 +137,10 @@ const CoachDetailsForm = (props: TCoachDetailsFormProps) => {
             options={languageOptions}
           />
           <FormFocusAreaSelect
-            name="focusAreas"
+            name="focusArea"
             mode="multiple"
             label="Focus Areas"
+            options={focusAreas}
           />
 
           <DialogFooter>

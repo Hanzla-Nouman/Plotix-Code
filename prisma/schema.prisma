@@ -179,7 +179,7 @@ model CoachingPackage {
   numberOfSessions Int
   seats            Int?
   eventTypeId      Int?
-
+  focusArea             FocusAreas[]
   relatedPurchases Purchase[]
   bookings         Booking[]
   focusAreas       FocusArea[]

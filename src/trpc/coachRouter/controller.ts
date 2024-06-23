@@ -53,6 +53,8 @@ export const updateCoach = async ({
 }: {
   input: TCoachUpdateArgsSchema;
 }) => {
+  console.log("I am input",input)
+  console.log("I am input",input.data.focusAreas)
   const updatedCoach = await prisma.coach.update(input);
 
   return {

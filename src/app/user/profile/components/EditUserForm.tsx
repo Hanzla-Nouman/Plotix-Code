@@ -227,9 +227,9 @@ export const EditUserForm = ({ currentUser }: EditUserFormProps) => {
       location: user?.coach?. location || "USA",
       preferedLanguages: user?.preferedLanguages || [],
       hourlyRate: user?.coach?.hourlyRate || 0, 
-      focusArea: user?.focusArea || [], 
+      focusArea: user?.coach?.focusArea || [], 
       focusAreas: user?.focusAreas?.map((focusArea) => focusArea.id) || [],
-      preferedCoachCategories:
+      preferedCoachCategories:  
         (user?.preferedCoachCategories as CoachCategories[]) || [],
     });
   }, [user]);
@@ -276,8 +276,8 @@ console.log("here is user on form",user)
       <div className="w-full max-w-[400px]">
         <FormWrapper<TEditUserFormValidator> {...form} onSubmit={onSubmit}>
           <FormInput name="name" required label="Legal Name" />
-          <FormInput name="aboutMe" label="About Me" />
-          <FormInput name="hourlyRate" label="Hourly Rate" type="number" min={0} />
+         {/* <FormInput name="aboutMe" label="About Me" />
+         <FormInput name="hourlyRate" label="Hourly Rate" type="number" min={0} /> */}
 
           <FormSelect
             name="preferedLanguages"
@@ -285,12 +285,12 @@ console.log("here is user on form",user)
             label="Languages"
             options={languageOptions}
           />
-          <FormSelect
+          {/* <FormSelect
             name="location"
             mode="single"
             label="Location"
             options={location}
-          />
+          /> */}
           <FormSelect
             name="focusArea"
             mode="multiple"

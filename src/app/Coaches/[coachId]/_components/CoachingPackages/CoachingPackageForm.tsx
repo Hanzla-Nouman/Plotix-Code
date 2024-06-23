@@ -9,6 +9,7 @@ import {
   FormVideoPicker,
   FormCoachingPackagesCategorySelect,
   FormFocusAreaSelect,
+  FormSelect,
 } from "@/components/FormElements";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,6 +30,7 @@ import {
 import { MediaSchema, CoachingPackageWithRelations } from "@/TSChema";
 import PackageTypeSelect from "./PackageTypeSelect";
 import FormFooter from "@/components/FormElements/formFooter";
+import { focusAreas } from "@/constants/Coach";
 
 interface TCoachingPackageFormProps extends PropsWithChildren {
   coachId: string;
@@ -47,7 +49,8 @@ const CoachingPackageFormInput = z.object({
   price: z.number().int().min(0),
   time: z.number().int().min(0),
   numberOfSessions: z.number().int(),
-  focusAreas: z.array(z.string())
+  focusAreas: z.array(z.string()), 
+  focusArea: z.array(z.string()), 
 });
 
 type TCoachingPackageFormInput = z.infer<typeof CoachingPackageFormInput>;
@@ -74,6 +77,7 @@ const CoachingPackageForm: React.FC<TCoachingPackageFormProps> = ({
       time: defaultValue?.time ?? 0,
       price: defaultValue?.price ?? 0,
       numberOfSessions: defaultValue?.numberOfSessions ?? 0,
+      focusArea: defaultValue?.focusArea || [],
       focusAreas: defaultValue?.focusAreas.map((focusArea) => focusArea.id) || [],
     },
   });
@@ -192,7 +196,13 @@ const CoachingPackageForm: React.FC<TCoachingPackageFormProps> = ({
             type="number"
             min={1}
           />
-
+<FormSelect
+            name="focusAreas"
+            mode="multiple"
+            label="Focus Areas New"
+            options={focusAreas}
+          
+          />
           <FormFocusAreaSelect name="focusAreas" mode="multiple" label="Focus Areas" />
 
           <FormImagePicker

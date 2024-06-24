@@ -42,7 +42,7 @@ const CoachListing: React.FC<CoachListingProps> = ({
   // const CategoryIcon = getCategoryIcon(
   //   coach?.categories[0]?.name as CoachCategoryName
   // );
-const CoachCategories = coach.coachingCategories.map(i=>i)
+  const CoachCategories = coach.coachingCategories.map((i) => i);
 
   return (
     <Link
@@ -80,18 +80,23 @@ const CoachCategories = coach.coachingCategories.map(i=>i)
 
         <div className="flex items-center gap-4">
           <div>
+            <div className="flex">
             <h3 className="text-lg font-bold">{coach.name}</h3>
+            <h3 className="text-lg font-bold">{coach?.hourlyRate}</h3>
+            </div>
             <p className="text-sm text-gray-500 dark:text-gray-400">
               {coach.location || "Location not specified"}
             </p>
           </div>
 
-{CoachCategories.map(c => <Badge
+          {CoachCategories.map((c) => (
+            <Badge
               variant="outline"
               className="border-orange-700 text-orange-700"
             >
               {c}
-            </Badge> )}
+            </Badge>
+          ))}
           {coach.categoryName && (
             <Badge
               variant="outline"

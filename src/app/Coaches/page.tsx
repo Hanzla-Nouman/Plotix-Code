@@ -4,7 +4,8 @@ import { CoachWithRelations } from "@/TSChema";
 import prepareDataForMapping from "@/helpers/prepareDataForMapping";
 import CoachesListingPage from "./components/CoachesListingPage";
 import { CoachingCategories } from "@prisma/client";
-import AllCoaches from "./components/AllCoaches";
+// import { trpc } from "@/trpc/client";
+import { ComboboxOption } from "@/components/ui/combobox";
 
 const Page = async () => {
   const trpcCaller = await getTrpcCaller();
@@ -12,6 +13,8 @@ const Page = async () => {
     categories: [CoachingCategories.Comics, CoachingCategories.Manga],
     take: 4,
   });
+  // const { data, isLoading } = trpc.focusArea.list.useQuery({});
+  
 const allCoaches = await trpcCaller.coach.getInfiniteCoaches({})
 console.log("CoachList",coachList);
 console.log("All Coaches here",allCoaches);

@@ -18,8 +18,6 @@ export default function   CoachesPageListing({ coachesList }: Props) {
       {console.log("coachesList",coachesList)}
       {coachesList.filter(i=>i.length>0).map((coachData, i) => (
         <div className="w-full" key={i}>
-          {console.log("coachData",coachData)}
-          {console.log("coachData in filter",coachData.map(i=>i.approvedForSale === "approved"))}
          {coachData.map(i=>i.approvedForSale === "approved") &&  <CoachReel
             title={coachData[0]?.categoryName || ""}
             subtitle="Easy access to the best expert you can ever found"

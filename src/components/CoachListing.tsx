@@ -11,10 +11,14 @@ import truncateText from "@/helpers/truncateText";
 import { CoachCategories } from "@/constants/Coach";
 
 interface CoachListingProps {
-  coach: (CoachWithRelations & { categoryName: string }) | null;
+  coach: (CoachWithRelations & { categoryName: `${CoachCategories}` }) | null;
   index: number;
   className?: string;
 }
+//   coach: (CoachWithRelations & { categoryName: string }) | null;
+//   index: number;
+//   className?: string;
+// }
 
 const CoachListing: React.FC<CoachListingProps> = ({
   coach,
@@ -37,7 +41,8 @@ const CoachListing: React.FC<CoachListingProps> = ({
 
   if (!coach || !isVisible) return <CoachPlaceholder className={className} />;
 
-  const validUrls = coach?.user?.avatar ? [coach.user.avatar.url] : [];
+  // const validUrls = coach?.user?.avatar ? [coach.user.avatar.url] : [];
+  const validUrl = coach?.user?.avatar?.url;
 
   // const CategoryIcon = getCategoryIcon(
   //   coach?.categories[0]?.name as CoachCategoryName
@@ -64,11 +69,11 @@ const CoachListing: React.FC<CoachListingProps> = ({
             Free Intro
           </Badge>
         )}
-
+{console.log("validUrl",validUrl)}
         <div className="flex justify-center">
-          {validUrls.length > 0 ? (
+          {validUrl ? (
             <img
-              src={validUrls[0]}
+              src={validUrl}
               alt={coach.name}
               className="h-16 w-16 rounded-full object-cover"
             />
@@ -80,6 +85,10 @@ const CoachListing: React.FC<CoachListingProps> = ({
         <div className="flex items-center gap-4">
           <div>
             <h3 className="text-lg font-bold">{coach.name}</h3>
+            <h3 className="text-lg font-bold text-orange-700">
+              {coach?.hourlyRate}/hr
+            </h3>
+
             <p className="text-sm text-gray-500 dark:text-gray-400">
               {coach.location || "Location not specified"}
             </p>

@@ -69,7 +69,6 @@ const CoachListing: React.FC<CoachListingProps> = ({
             Free Intro
           </Badge>
         )}
-{console.log("validUrl",validUrl)}
         <div className="flex justify-center">
           {validUrl ? (
             <img

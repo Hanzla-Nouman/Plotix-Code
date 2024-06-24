@@ -17,10 +17,20 @@ export default function CoachListingFilters({
   allCoaches,
   setPrice,
   focusAreaOptions,
+  selectedOptions,
+  setSelectedOptions,
   setFocusArea
 }) {
   const { data: queryResults, isLoading } =
     trpc.category.getCategoriesList.useQuery({});
+    const handleOptionClick = (value) => {
+      if (selectedOptions.includes(value)) {
+        setSelectedOptions(selectedOptions.filter(option => option !== value));
+      } else {
+        setSelectedOptions([...selectedOptions, value]);
+      }
+    };
+    const isSelected = (value) => selectedOptions.includes(value);
 
   const categories = queryResults || [];
   // const categoriesToMap: (CoachCategory | null)[] = prepareDataForMapping({
@@ -28,8 +38,6 @@ export default function CoachListingFilters({
   //   isLoading,
   //   take: 5,
   // });
-  const fromOptions = Array.from({ length: 80 }, (_, index) => (index + 1) * 5);
-  const toOptions = Array.from({ length: 100 }, (_, index) => (index + 1) * 5);
   const [toggleFilters, settoggleFilters] = useState(false);
   return (
     <MaxWidthWrapper className="mt-24 flex gap-8">
@@ -57,34 +65,39 @@ export default function CoachListingFilters({
               ))}
             </select>
           </div>
-          <div className="max-w-sm mx-auto">
-            <select
-              name=""
-              id=""
-              onChange={(e) => setLanguage(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option selected>Language</option>
-
-              {languageOptions.map((i) => (
-                <option value={i.label}>{i.label}</option>
-              ))}
-            </select>
+              
+          <div className="relative">
+      <button
+        type="button"
+        className="hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 px-4 pe-9 flex text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:border-blue-500 focus:ring-blue-500 before:absolute before:inset-0 before:z-[1] dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400"
+      >
+        Expertise
+        <div className="absolute top-1/2 end-3 -translate-y-1/2">
+          <svg className="flex-shrink-0 size-3.5 text-gray-500 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m7 15 5 5 5-5" />
+            <path d="m7 9 5-5 5 5" />
+          </svg>
+        </div>
+      </button>
+      <div className="mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700">
+        {focusAreaOptions.map(option => (
+          <div
+            key={option.label}
+            className={`py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-neutral-200 dark:focus:bg-neutral-800 ${isSelected(option.value) ? 'bg-gray-100 dark:bg-neutral-800' : ''}`}
+            onClick={() => handleOptionClick(option.label)}
+          >
+            <div className="flex justify-between items-center w-full">
+              <span>{option.label}</span>
+              {isSelected(option.label) && (
+                <svg className="flex-shrink-0 size-3.5 text-blue-600 dark:text-blue-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+              )}
+            </div>
           </div>
-          <div className="max-w-sm mx-auto">
-            <select
-              name=""
-              id=""
-              onChange={(e) => setCategory(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option selected>Category</option>
-
-              {COACH_CATEGORIES.map((i) => (
-                <option value={i.label}>{i.label}</option>
-              ))}
-            </select>
-          </div>
+        ))}
+      </div>
+    </div>
           <div className="max-w-sm mx-auto">
             <select
               id="countries"

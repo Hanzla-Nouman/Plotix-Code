@@ -29,6 +29,7 @@ export default function CoachesListingPage({ filteredCoachesData, allCoaches }: 
   const [price, setPrice] = useState("");
   const [filteredCoaches, setFilteredCoaches] = useState(allCoaches.items);
   const [selectedOptions, setSelectedOptions] = useState([]);
+ const [fullPageCategory, setFullPageCategory] = useState("")
 
   useEffect(() => {
     setFocusAreaOptions(
@@ -46,13 +47,11 @@ export default function CoachesListingPage({ filteredCoachesData, allCoaches }: 
     setPrice("");
     setFocusArea("");
     setSelectedOptions([]);
-    setFilteredCoaches(allCoaches.items); // Reset to show all coaches
+    setFilteredCoaches(allCoaches.items);
   };
 
   const handleApplyFilters = () => {
     let filteredData = allCoaches.items;
-
-    // Filter by price range
     if (price) {
       if (price === "10 to 100") {
         filteredData = filteredData.filter(c => c.hourlyRate >= 10 && c.hourlyRate <= 100);
@@ -67,31 +66,18 @@ export default function CoachesListingPage({ filteredCoachesData, allCoaches }: 
       }
       console.log("filtered by pricing", filteredData);
     }
-
-    // Filter by location
     if (location) {
       filteredData = filteredData.filter(c => c.location.toLowerCase() === location.toLowerCase());
       console.log("filtered by location", filteredData);
     }
-
-    // Filter by language
     if (language) {
       filteredData = filteredData.filter(c => c.language.includes(language));
       console.log("filtered by language", filteredData);
     }
-
-    // Filter by category
     if (category) {
       filteredData = filteredData.filter(c => c.coachingCategories.includes(category));
       console.log("filtered by category", filteredData);
     }
-
-    // Filter by focus area options
-    console.log("selected Options", selectedOptions);
-    const mainArray = ["hanzla", "hamza", "ali", "ahmad"];
-    const checkArray = ["hanzla", "hamza"];
-    const res = checkArray.every(name => mainArray.includes(name));
-    console.log("result", res);
     if (selectedOptions) {
       filteredData = filteredData.filter(coach => {
         const coachFocusAreas = coach.focusAreas.map(i => i.name);
@@ -104,10 +90,13 @@ export default function CoachesListingPage({ filteredCoachesData, allCoaches }: 
   useEffect(() => {
     if (searchValue) {
       setFilteredCoaches(allCoaches.items.filter(c => c.name.toLowerCase().includes(searchValue.toLowerCase())));
-    } else {
+    } else if(fullPageCategory){
+      setFilteredCoaches(allCoaches.items.filter(c => c.coachingCategories.includes(fullPageCategory)));
+    }
+    else {
       setFilteredCoaches(allCoaches.items);
     }
-  }, [searchValue, allCoaches]);
+  }, [searchValue, allCoaches,fullPageCategory]);
 
   return (
     <>
@@ -125,9 +114,10 @@ export default function CoachesListingPage({ filteredCoachesData, allCoaches }: 
           focusAreaOptions={focusAreaOptions}
           setSelectedOptions={setSelectedOptions}
           selectedOptions={selectedOptions}
+          setFullPageCategory={setFullPageCategory}
         />
       )}
-      {selectedOptions && selectedOptions.map(i => <h1 key={i}>{i}</h1>)}
+  
       <div className="mt-10 px-10">
         {searchValue ? (
           <AllCoaches coaches={filteredCoaches} />

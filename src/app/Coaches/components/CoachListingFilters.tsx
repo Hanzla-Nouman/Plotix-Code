@@ -19,7 +19,8 @@ export default function CoachListingFilters({
   focusAreaOptions,
   selectedOptions,
   setSelectedOptions,
-  setFocusArea
+  setFocusArea,
+  setFullPageCategory
 }) {
   const { data: queryResults, isLoading } =
     trpc.category.getCategoriesList.useQuery({});
@@ -52,24 +53,12 @@ export default function CoachListingFilters({
       </Button>
       {toggleFilters && (
         <div className="flex gap-4">
-          <div className="max-w-sm mx-auto">
-            <select
-              name=""
-              id=""
-              onChange={(e) => setLocation(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option selected>Location</option>
-              {location.map((i) => (
-                <option value={i.label}>{i.label}</option>
-              ))}
-            </select>
-          </div>
+        
               
           <div className="relative">
       <button
         type="button"
-        className="hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 px-4 pe-9 flex text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:border-blue-500 focus:ring-blue-500 before:absolute before:inset-0 before:z-[1] dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400"
+        className="w-72 hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 px-4 pe-9 flex text-nowrap  cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:border-blue-500 focus:ring-blue-500 before:absolute before:inset-0 before:z-[1] dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400"
       >
         Expertise
         <div className="absolute top-1/2 end-3 -translate-y-1/2">
@@ -79,7 +68,7 @@ export default function CoachListingFilters({
           </svg>
         </div>
       </button>
-      <div className="mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700">
+      <div className="mt-2 z-50 w-full max-h-72 p-1 hidden space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700">
         {focusAreaOptions.map(option => (
           <div
             key={option.label}
@@ -112,18 +101,7 @@ export default function CoachListingFilters({
               <option value="400 to 500">From 400 to 500</option>
             </select>
           </div>
-          <div className="max-w-sm mx-auto">
-            <select
-              id="countries"
-              onChange={(e) => setFocusArea(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option selected>Focus Areas</option>
-              {focusAreaOptions.map((i) => (
-                <option value={i.label}>{i.label}</option>
-              ))}
-            </select>
-          </div>
+   
           <div className="gap-2 flex">
             <button
               className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-orange-600 h-10 px-4 py-2"
@@ -142,7 +120,7 @@ export default function CoachListingFilters({
       )}
       {!toggleFilters && (
         <div className="flex gap-4 sm:gap-6 max-w-max overflow-x-auto lg:max-w-full">
-          <Button variant="ghost" className="text-primary hover:text-primary">
+          <Button variant="ghost" className="text-primary hover:text-primary" onClick={()=>setFullPageCategory("")}>
             All
           </Button>
           {/* {console.log("CoachingCategories",allCoaches)} */}
@@ -153,6 +131,7 @@ export default function CoachListingFilters({
                   variant="ghost"
                   className="flex items-center gap-2 px-2 w-max hover:text-primary"
                   key={category}
+                  onClick={()=>setFullPageCategory(category)}
                 >
                   <CategoryIcon name={category} />
 
